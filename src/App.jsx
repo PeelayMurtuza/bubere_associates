@@ -19,7 +19,6 @@ function App() {
     setActiveMenu((prev) => (prev === menu ? null : menu));
   };
 
-  // Cursor movement effect (now global)
   useEffect(() => {
     const move = (e) => setCursor({ x: e.clientX, y: e.clientY });
     window.addEventListener('mousemove', move);
@@ -28,7 +27,7 @@ function App() {
 
   return (
     <BrowserRouter>
-      {/* Floating Cursor (Global) */}
+      {/* Floating Cursor */}
       <motion.div
         className="fixed top-0 left-0 w-6 h-6 rounded-full bg-blue-600 mix-blend-difference pointer-events-none z-[999]"
         animate={{
@@ -39,14 +38,14 @@ function App() {
       />
 
       {/* Navbar */}
-      <nav className="fixed top-4 left-1/2 transform -translate-x-1/2 bg-white border shadow-lg rounded-full px-6 py-3 z-50 w-max flex gap-6">
-        <Link to="/" className="text-gray-700 hover:text-blue-600 font-medium">
+      <nav className="fixed top-4 left-1/2 transform -translate-x-1/2 bg-transparent border shadow-lg rounded-full px-6 py-3 z-50 w-max flex gap-6">
+        <Link to="/" className="text-gray-100 hover:text-yellow-300 font-medium">
           Home
         </Link>
-        <Link to="/about" className="text-gray-700 hover:text-blue-600 font-medium">
+        <Link to="/about" className="text-gray-100 hover:text-yellow-300 font-medium">
           About
         </Link>
-        <Link to="/contact" className="text-gray-700 hover:text-blue-600 font-medium">
+        <Link to="/contact" className="text-gray-100 hover:text-yellow-300 font-medium">
           Contact
         </Link>
 
@@ -55,7 +54,7 @@ function App() {
           <button
             onMouseEnter={() => toggleMenu('services')}
             onMouseLeave={() => toggleMenu(null)}
-            className="text-gray-700 hover:text-blue-600 font-medium"
+            className="text-gray-100 hover:text-yellow-300 font-medium"
           >
             Services
           </button>
@@ -85,8 +84,16 @@ function App() {
         </div>
       </nav>
 
-      {/* Page Content */}
-      <div className="pt-24 px-4">
+      {/* Page Content with Gradient Background */}
+      <div
+        className="min-h-screen pt-24 px-4"
+        style={{
+          background: '#3C3B3F',
+          backgroundImage:
+            'linear-gradient(to right, #605C3C, #3C3B3F)',
+          color: '#f5f5dc' // soft beige text for contrast
+        }}
+      >
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />

@@ -112,11 +112,7 @@ export default function Home() {
 
   return (
     <div style={{ backgroundColor: '#3C3B3F', backgroundImage: 'linear-gradient(to right, #605C3C, #3C3B3F)', fontFamily: "'Poppins', 'Inter', sans-serif" }} className="relative min-h-screen text-gray-100">
-      <div className="absolute inset-0 -z-10 overflow-hidden">
-        <div className="absolute -left-40 -top-40 w-[720px] h-[720px] rounded-full opacity-20 blur-3xl animate-spin-slow bg-gradient-to-br from-amber-700 via-amber-500 to-rose-500 transform-gpu" />
-        <div className="absolute -right-40 -bottom-40 w-[520px] h-[520px] rounded-full opacity-14 blur-3xl animate-pulse-slow bg-gradient-to-tr from-yellow-600 via-amber-600 to-green-500 transform-gpu" />
-        <div className="absolute inset-0 bg-black/10" />
-      </div>
+      
 
       <section id="home" className="pt-20 pb-12 px-6">
         <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-8 items-center">
@@ -422,7 +418,7 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="mt-8 border-t border-white/8 pt-6 text-center text-sm text-gray-300">© {new Date().getFullYear()} Buberes &amp; Associate — All rights reserved</div>
+        <div className="mt-8 border-t border-white/8 pt-6 text-center text-sm text-gray-300">© {new Date().getFullYear()} Created By Murtuza Afsar Peelay All Right Reserved </div>
       </footer>
 
       <div className="fixed right-6 bottom-6 z-50">
