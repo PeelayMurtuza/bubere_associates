@@ -23,7 +23,7 @@ const Contact = () => {
     <div
       className="min-h-screen flex items-center justify-center px-4"
       style={{
-        background: "linear-gradient(to right, #1e3c72, #2a5298)",
+        
         fontFamily: "'Nunito', sans-serif",
       }}
     >
@@ -78,7 +78,7 @@ const Contact = () => {
             type="submit"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="w-full bg-gradient-to-r from-cyan-400 to-blue-500 text-white py-3 px-6 rounded-lg font-semibold shadow-lg hover:shadow-cyan-400/50 transition-all"
+            className="w-full bg-gradient-to-r from-gray-800 to to-gray-900 text-white py-3 px-6 rounded-lg font-semibold shadow-lg hover:shadow-cyan-100/50 transition-all"
           >
             Send Message
           </motion.button>

@@ -2,6 +2,13 @@ import React, { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { FiMessageSquare, FiMapPin, FiPhone, FiMail } from 'react-icons/fi';
 
+// Images
+import DadaImage from '../images/DADA.jpg';
+import DadaGarden from '../images/DADA_GARDEN_JD.jpg';
+import GardenEntrance from '../images/GARDEN_ENTRANCE.jpg';
+import GardenSitting from '../images/GARDEN_SITTING.jpg';
+import NHRCL from '../images/NHRCL.jpg';
+
 const servicesData = [
   { id: 1, title: 'Government Tendering', text: 'Tender preparation, pre-bid, execution & compliance' },
   { id: 2, title: 'Civil Construction', text: 'Roads, drains, buildings, and metro civil support' },
@@ -12,9 +19,9 @@ const servicesData = [
 ];
 
 const projectsData = [
-  { id: 1, title: 'Male Garden Development', year: '2018', img: '/assets/project-1.jpg', short: 'Garden beautification & civil works', long: 'Complete landscaping, paving, and small-structure construction.' },
-  { id: 2, title: 'Metro Water Supply Works', year: '2019', img: '/assets/project-2.jpg', short: 'Underground water works for metro support', long: 'Large-bore pipeline installation and chamber works near metro alignments.' },
-  { id: 3, title: 'Stormwater Drainage', year: '2021', img: '/assets/project-3.jpg', short: 'Storm drainage & pipeline cleaning', long: 'Widening drains, new RCC channels and desilting operations.' },
+  { id: 1, title: 'Male Garden Development', year: '2018', img: DadaGarden, short: 'Garden beautification & civil works', long: 'Complete landscaping, paving, and small-structure construction.' },
+  { id: 2, title: 'Metro Water Supply Works', year: '2019', img: GardenEntrance, short: 'Underground water works for metro support', long: 'Large-bore pipeline installation and chamber works near metro alignments.' },
+  { id: 3, title: 'Stormwater Drainage', year: '2021', img: GardenSitting, short: 'Storm drainage & pipeline cleaning', long: 'Widening drains, new RCC channels and desilting operations.' },
 ];
 
 const timelineData = [
@@ -25,78 +32,69 @@ const timelineData = [
 ];
 
 const slides = [
-  { id: 1, src: '/assets/slide-1.jpg', caption: 'Highway Rehabilitation - Phase I' },
-  { id: 2, src: '/assets/slide-2.jpg', caption: 'Drainage & Pipeline Works' },
-  { id: 3, src: '/assets/slide-3.jpg', caption: 'Urban Landscaping & Parks' },
-  { id: 4, src: '/assets/slide-4.jpg', caption: 'Metro Support Structural Works' },
-];
-
-const testimonials = [
-  { id: 1, name: 'Mr. Sharma', role: 'Municipal Officer', quote: 'Delivered on schedule and maintained excellent standards.' },
-  { id: 2, name: 'Ms. Kulkarni', role: 'Project Consultant', quote: 'Very professional team with strong site management.' },
-  { id: 3, name: 'Mr. Desai', role: 'Client', quote: 'Transparent processes and great communication throughout.' },
-];
-
-const awards = [
-  { id: 1, title: 'Best Contractor Award', year: '2019' },
-  { id: 2, title: 'Safety Excellence', year: '2022' },
+  { id: 1, src: NHRCL, caption: 'Highway Rehabilitation - Phase I' },
+  { id: 2, src: DadaGarden, caption: 'Drainage & Pipeline Works' },
+  { id: 3, src: GardenSitting, caption: 'Urban Landscaping & Parks' },
+  { id: 4, src: DadaImage, caption: 'Metro Support Structural Works' }, // replaced placeholder
 ];
 
 export default function Home() {
+  // UI state
   const [typed, setTyped] = useState('');
-  const title = 'Bubere & Associate';
-
-  useEffect(() => {
-    let i = 0;
-    const id = setInterval(() => {
-      setTyped(title.slice(0, i + 1));
-      i += 1;
-      if (i >= title.length) clearInterval(id);
-    }, 80);
-    return () => clearInterval(id);
-  }, []);
-
-  const statsRef = useRef(null);
-  const [countersStarted, setCountersStarted] = useState(false);
   const [projectsCount, setProjectsCount] = useState(0);
   const [clientsCount, setClientsCount] = useState(0);
   const [successRate, setSuccessRate] = useState(0);
-
-  useEffect(() => {
-    if (!statsRef.current || typeof IntersectionObserver === 'undefined') return;
-    const obs = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) setCountersStarted(true);
-      });
-    }, { threshold: 0.3 });
-    obs.observe(statsRef.current);
-    return () => obs.disconnect();
-  }, []);
-
-  useEffect(() => {
-    if (!countersStarted) return;
-    let p = 0, c = 0, s = 0;
-    const intId = setInterval(() => {
-      if (p < 240) p += 6;
-      if (c < 150) c += 4;
-      if (s < 99) s += 1;
-      setProjectsCount(Math.min(p, 240));
-      setClientsCount(Math.min(c, 150));
-      setSuccessRate(Math.min(s, 99));
-      if (p >= 240 && c >= 150 && s >= 99) clearInterval(intId);
-    }, 40);
-    return () => clearInterval(intId);
-  }, [countersStarted]);
-
   const [selected, setSelected] = useState(null);
   const [currentSlide, setCurrentSlide] = useState(0);
 
-  useEffect(() => {
-    const id = setInterval(() => {
-      setCurrentSlide(prev => (prev + 1) % slides.length);
-    }, 4500);
-    return () => clearInterval(id);
-  }, []);
+  // Refs
+  const statsRef = useRef(null);
+  const countersStartedRef = useRef(false);
+  const intervalsRef = useRef({ typing: null, slider: null, counters: null });
+  const observerRef = useRef(null);
+
+useEffect(() => {
+  const title = 'Bubere & Associate';
+  let i = 0;
+
+  // ---- Typing effect ----
+ intervalsRef.current.typing = setInterval(() => {
+  i += 1;
+  setTyped(title.slice(0, i));
+
+  if (i >= title.length) {
+    i = 0; // reset index to start again
+    setTyped(""); // clear text before restarting
+  }
+}, 158);
+
+
+  // ---- Counters (start immediately on load) ----
+  let p = 0, c = 0, s = 0;
+  intervalsRef.current.counters = setInterval(() => {
+    if (p < 240) p += 6;
+    if (c < 150) c += 4;
+    if (s < 99) s += 1;
+    setProjectsCount(Math.min(p, 240));
+    setClientsCount(Math.min(c, 150));
+    setSuccessRate(Math.min(s, 99));
+    if (p >= 240 && c >= 150 && s >= 99) {
+      clearInterval(intervalsRef.current.counters);
+      intervalsRef.current.counters = null;
+    }
+  }, 40);
+
+  // ---- Slider autoplay ----
+  intervalsRef.current.slider = setInterval(() => {
+    setCurrentSlide(prev => (prev + 1) % slides.length);
+  }, 4500);
+
+  // ---- Cleanup ----
+  return () => {
+    Object.values(intervalsRef.current).forEach(id => id && clearInterval(id));
+    intervalsRef.current = { typing: null, slider: null, counters: null };
+  };
+}, []);
 
   function prevSlide() {
     setCurrentSlide(prev => (prev - 1 + slides.length) % slides.length);
@@ -111,18 +109,29 @@ export default function Home() {
   }
 
   return (
-    <div style={{ backgroundColor: '#3C3B3F', backgroundImage: 'linear-gradient(to right, #605C3C, #3C3B3F)', fontFamily: "'Poppins', 'Inter', sans-serif" }} className="relative min-h-screen text-gray-100">
-      
-
+    <div
+      style={{
+        backgroundColor: '#3C3B3F',
+        backgroundImage: 'linear-gradient(to right, #605C3C, #3C3B3F)',
+        fontFamily: "'Poppins', 'Inter', sans-serif",
+      }}
+      className="relative min-h-screen text-gray-100"
+    >
+      {/* HERO */}
       <section id="home" className="pt-20 pb-12 px-6">
         <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-8 items-center">
           <motion.div initial={{ x: -20, opacity: 0 }} animate={{ x: 0, opacity: 1 }} transition={{ duration: 0.8 }}>
             <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight leading-tight text-amber-100">
               Trusted Civil Contractors
               <br />
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-amber-200 via-amber-100 to-white">{typed}</span>
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-amber-200 via-amber-100 to-white pr-1">
+                {typed}
+              </span>
             </h1>
-            <p className="mt-4 text-gray-200 max-w-xl">Established in 2003 — delivering infrastructure projects across Maharashtra with a commitment to quality, timeliness and client satisfaction.</p>
+            <p className="mt-4 text-gray-200 max-w-xl">
+              Established in 2003 — delivering infrastructure projects across Maharashtra with a commitment to quality,
+              timeliness and client satisfaction.
+            </p>
 
             <div className="mt-8 grid grid-cols-3 gap-4">
               <div className="bg-white/6 backdrop-blur rounded-lg p-4 shadow border border-white/8">
@@ -140,8 +149,24 @@ export default function Home() {
             </div>
 
             <div className="mt-6 flex gap-3">
-              <button onClick={goContact} className="inline-flex items-center gap-2 bg-gradient-to-r from-amber-500 via-amber-400 to-amber-300 text-gray-900 px-5 py-3 rounded-full shadow-lg">Request a Quote</button>
-              <button onClick={() => setSelected({ title: 'Capability Statement', year: '', long: 'Download our capability statement or request a meeting to discuss your project requirements.' })} className="inline-flex items-center gap-2 border border-white/10 px-5 py-3 rounded-full text-gray-100">Capability</button>
+              <button
+                onClick={goContact}
+                className="inline-flex items-center gap-2 bg-gradient-to-r from-amber-500 via-amber-400 to-amber-300 text-gray-900 px-5 py-3 rounded-full shadow-lg"
+              >
+                Request a Quote
+              </button>
+              <button
+                onClick={() =>
+                  setSelected({
+                    title: 'Capability Statement',
+                    year: '',
+                    long: 'Download our capability statement or request a meeting to discuss your project requirements.',
+                  })
+                }
+                className="inline-flex items-center gap-2 border border-white/10 px-5 py-3 rounded-full text-gray-100"
+              >
+                Capability
+              </button>
             </div>
 
             <div className="mt-6 grid grid-cols-2 gap-3">
@@ -158,7 +183,7 @@ export default function Home() {
 
           <motion.div initial={{ x: 20, opacity: 0 }} animate={{ x: 0, opacity: 1 }} transition={{ duration: 0.8 }}>
             <div className="relative rounded-2xl overflow-hidden shadow-xl border border-white/8">
-              <img src="/assets/company-hero.jpg" alt="Bubere & Associate" className="w-full h-[420px] object-cover" />
+              <img src={DadaImage} alt="Bubere & Associate" className="w-full h-[420px] object-cover" />
               <div className="absolute left-6 bottom-6 bg-gradient-to-r from-black/40 to-black/20 rounded-xl p-4 shadow-md w-64">
                 <div className="font-semibold text-amber-200 text-sm">20+ Years Experience</div>
                 <div className="text-xs text-gray-300 mt-1">Registered with BNCMC & NHSRCL</div>
@@ -169,9 +194,12 @@ export default function Home() {
         </div>
       </section>
 
+      {/* SERVICES */}
       <section id="services" className="px-6 py-12">
         <div className="max-w-6xl mx-auto">
-          <motion.h2 initial={{ y: 20, opacity: 0 }} whileInView={{ y: 0, opacity: 1 }} className="text-3xl font-bold text-center mb-8 text-amber-100">Services</motion.h2>
+          <motion.h2 initial={{ y: 20, opacity: 0 }} whileInView={{ y: 0, opacity: 1 }} className="text-3xl font-bold text-center mb-8 text-amber-100">
+            Services
+          </motion.h2>
           <div className="grid md:grid-cols-3 lg:grid-cols-4 gap-6">
             {servicesData.map(s => (
               <motion.div key={s.id} whileHover={{ y: -6, scale: 1.02 }} className="bg-white/6 backdrop-blur rounded-2xl p-6 shadow border border-white/8">
@@ -183,6 +211,7 @@ export default function Home() {
         </div>
       </section>
 
+      {/* PROJECTS */}
       <section id="projects" className="px-6 py-12">
         <div className="max-w-6xl mx-auto">
           <h2 className="text-3xl font-bold mb-6 text-amber-100">Selected Projects</h2>
@@ -199,7 +228,13 @@ export default function Home() {
                   </div>
                   <p className="text-sm text-gray-300 mt-2">{p.short}</p>
                   <div className="mt-4 flex gap-2">
-                    <button type="button" onClick={() => setSelected(p)} className="px-3 py-2 rounded bg-gradient-to-r from-amber-500 to-amber-300 text-gray-900 text-sm">Details</button>
+                    <button
+                      type="button"
+                      onClick={() => setSelected(p)}
+                      className="px-3 py-2 rounded bg-gradient-to-r from-amber-500 to-amber-300 text-gray-900 text-sm"
+                    >
+                      Details
+                    </button>
                   </div>
                 </div>
               </div>
@@ -208,6 +243,7 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ABOUT */}
       <section id="about" className="px-6 py-12">
         <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-8 items-start">
           <div>
@@ -235,13 +271,17 @@ export default function Home() {
 
             <div className="mt-8">
               <h4 className="text-xl font-bold mb-3 text-amber-100">Sustainability & CSR</h4>
-              <p className="text-sm text-gray-300">We prioritise low-impact construction practices, waste reduction and community engagement in all our projects.</p>
+              <p className="text-sm text-gray-300">
+                We prioritise low-impact construction practices, waste reduction and community engagement in all our projects.
+              </p>
             </div>
           </div>
 
           <div ref={statsRef}>
             <h3 className="text-2xl font-bold mb-4 text-amber-100">Why Choose Us</h3>
-            <p className="text-gray-300 mb-4">We combine decades of experience with a commitment to innovation and quality, delivering projects that meet and exceed client expectations.</p>
+            <p className="text-gray-300 mb-4">
+              We combine decades of experience with a commitment to innovation and quality, delivering projects that meet and exceed client expectations.
+            </p>
 
             <div className="grid grid-cols-1 gap-4">
               <div className="bg-white/6 p-4 rounded shadow border border-white/8">
@@ -284,6 +324,7 @@ export default function Home() {
         </div>
       </section>
 
+      {/* CLIENTS */}
       <section className="px-6 py-12">
         <div className="max-w-6xl mx-auto">
           <h3 className="text-2xl font-bold mb-6 text-center text-amber-100">Clients & Partners</h3>
@@ -296,13 +337,14 @@ export default function Home() {
         </div>
       </section>
 
+      {/* SLIDER */}
       <section id="gallery-slider" className="px-6 py-12 bg-white/6">
         <div className="max-w-6xl mx-auto">
           <h2 className="text-3xl font-bold mb-6 text-center text-amber-100">Project Highlights</h2>
           <div className="relative overflow-hidden rounded-2xl shadow-xl border border-white/8 bg-gray-900">
             <div className="flex transition-transform duration-700" style={{ transform: `translateX(-${currentSlide * 100}%)` }}>
               {slides.map(slide => (
-                <div key={slide.id} className="min-w-full h-80 flex items-center justify-center bg-gray-800 relative">
+                <div key={slide.id} className="min-w-full h-80 flex items-center justify-center bg-gray-8 00 relative">
                   <img src={slide.src} alt={slide.caption} className="absolute inset-0 w-full h-full object-cover opacity-90" />
                   <div className="relative z-10 bg-black/30 w-full h-full flex items-end">
                     <div className="p-6 text-white max-w-3xl">
@@ -318,18 +360,27 @@ export default function Home() {
 
             <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
               {slides.map((s, i) => (
-                <button key={s.id} onClick={() => setCurrentSlide(i)} className={`w-3 h-3 rounded-full ${i === currentSlide ? 'bg-amber-300' : 'bg-white/30'}`} />
+                <button
+                  key={s.id}
+                  onClick={() => setCurrentSlide(i)}
+                  className={`w-3 h-3 rounded-full ${i === currentSlide ? 'bg-amber-300' : 'bg-white/30'}`}
+                />
               ))}
             </div>
           </div>
         </div>
       </section>
 
+      {/* TESTIMONIALS */}
       <section id="testimonials" className="px-6 py-12">
         <div className="max-w-6xl mx-auto">
           <h2 className="text-3xl font-bold mb-6 text-center text-amber-100">What Clients Say</h2>
           <div className="grid md:grid-cols-3 gap-6">
-            {testimonials.map(t => (
+            {[
+              { id: 1, name: 'Mr. Sharma', role: 'Municipal Officer', quote: 'Delivered on schedule and maintained excellent standards.' },
+              { id: 2, name: 'Ms. Kulkarni', role: 'Project Consultant', quote: 'Very professional team with strong site management.' },
+              { id: 3, name: 'Mr. Desai', role: 'Client', quote: 'Transparent processes and great communication throughout.' },
+            ].map(t => (
               <div key={t.id} className="bg-white/6 p-6 rounded-lg shadow border border-white/8">
                 <div className="italic text-gray-200">“{t.quote}”</div>
                 <div className="mt-4 font-semibold text-amber-100">— {t.name}</div>
@@ -340,24 +391,31 @@ export default function Home() {
         </div>
       </section>
 
+      {/* PIPELINE */}
       <section id="pipeline" className="px-6 py-12 bg-white/6">
         <div className="max-w-6xl mx-auto">
           <h2 className="text-3xl font-bold mb-6 text-center text-amber-100">Project Pipeline</h2>
           <div className="space-y-4">
             <div>
-              <div className="flex justify-between text-sm text-gray-300 mb-1">Metro Support Expansion <span>60%</span></div>
+              <div className="flex justify-between text-sm text-gray-300 mb-1">
+                Metro Support Expansion <span>60%</span>
+              </div>
               <div className="w-full bg-white/8 rounded-full h-3 overflow-hidden">
                 <div className="h-3 bg-amber-400" style={{ width: '60%' }} />
               </div>
             </div>
             <div>
-              <div className="flex justify-between text-sm text-gray-300 mb-1">Drainage Rehabilitation <span>35%</span></div>
+              <div className="flex justify-between text-sm text-gray-300 mb-1">
+                Drainage Rehabilitation <span>35%</span>
+              </div>
               <div className="w-full bg-white/8 rounded-full h-3 overflow-hidden">
                 <div className="h-3 bg-amber-400" style={{ width: '35%' }} />
               </div>
             </div>
             <div>
-              <div className="flex justify-between text-sm text-gray-300 mb-1">Urban Landscaping <span>80%</span></div>
+              <div className="flex justify-between text-sm text-gray-300 mb-1">
+                Urban Landscaping <span>80%</span>
+              </div>
               <div className="w-full bg-white/8 rounded-full h-3 overflow-hidden">
                 <div className="h-3 bg-amber-400" style={{ width: '80%' }} />
               </div>
@@ -366,6 +424,7 @@ export default function Home() {
         </div>
       </section>
 
+      {/* MODAL */}
       {selected && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60">
           <div className="bg-gray-900 rounded-xl max-w-2xl w-full p-6 border border-white/8">
@@ -374,15 +433,16 @@ export default function Home() {
                 <h3 className="text-xl font-bold text-amber-100">{selected.title}</h3>
                 <div className="text-sm text-gray-300">{selected.year}</div>
               </div>
-              <button type="button" onClick={() => setSelected(null)} className="text-gray-300">Close</button>
+              <button type="button" onClick={() => setSelected(null)} className="text-gray-300">
+                Close
+              </button>
             </div>
-            <div className="mt-4 text-gray-200">
-              {selected.long}
-            </div>
+            <div className="mt-4 text-gray-200">{selected.long}</div>
           </div>
         </div>
       )}
 
+      {/* FOOTER */}
       <footer className="mt-12 py-12 text-gray-200">
         <div className="max-w-6xl mx-auto px-6 grid md:grid-cols-3 gap-8 items-start">
           <div>
@@ -413,20 +473,35 @@ export default function Home() {
             <div className="font-semibold text-amber-100">Location</div>
             <div className="text-sm text-gray-300 mt-2">Bhiwandi, Maharashtra, India</div>
             <div className="mt-3 rounded overflow-hidden shadow mt-2">
-              <iframe title="Bhiwandi location" width="100%" height="150" loading="lazy" src="https://www.google.com/maps?q=181+Gala+No.+1+Rose+Apartment+Saudagar+Mohalla+Bhiwandi+412302&output=embed" />
+              <iframe
+                title="Bhiwandi location"
+                width="100%"
+                height="150"
+                loading="lazy"
+                src="https://www.google.com/maps?q=181+Gala+No.+1+Rose+Apartment+Saudagar+Mohalla+Bhiwandi+412302&output=embed"
+              />
             </div>
           </div>
         </div>
 
-        <div className="mt-8 border-t border-white/8 pt-6 text-center text-sm text-gray-300">© {new Date().getFullYear()} Created By Murtuza Afsar Peelay All Right Reserved </div>
+        <div className="mt-8 border-t border-white/8 pt-6 text-center text-sm text-gray-300">
+          © {new Date().getFullYear()} Created By Murtuza Afsar Peelay All Right Reserved
+        </div>
       </footer>
 
+      {/* Floating CTA */}
       <div className="fixed right-6 bottom-6 z-50">
-        <motion.button whileTap={{ scale: 0.95 }} whileHover={{ scale: 1.05 }} onClick={goContact} className="bg-gradient-to-r from-amber-500 to-amber-300 text-gray-900 p-4 rounded-full shadow-xl">
+        <motion.button
+          whileTap={{ scale: 0.95 }}
+          whileHover={{ scale: 1.05 }}
+          onClick={goContact}
+          className="bg-gradient-to-r from-amber-500 to-amber-300 text-gray-900 p-4 rounded-full shadow-xl"
+        >
           <FiMessageSquare size={20} />
         </motion.button>
       </div>
 
+      {/* Inline fonts + small utils */}
       <style>{`@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Inter:wght@300;400;600&display=swap');
         .animate-spin-slow { animation: spin 28s linear infinite; }
         .animate-pulse-slow { animation: pulse 6s ease-in-out infinite; }
