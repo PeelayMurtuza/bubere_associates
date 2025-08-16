@@ -100,8 +100,13 @@ function App() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/services/:serviceId" element={<div className="text-xl">Service Detail Page</div>} />
         </Routes>
+        <div className="border-t border-white/8 py-6 text-center text-sm text-gray-300">
+          © {new Date().getFullYear()} Bubere &amp; Associate | Developed by Murtuza Afsar Peelay. All Rights Reserved.
+        </div>
+
       </div>
     </BrowserRouter>
+
   );
 }
 

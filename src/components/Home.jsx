@@ -484,9 +484,7 @@ useEffect(() => {
           </div>
         </div>
 
-        <div className="mt-8 border-t border-white/8 pt-6 text-center text-sm text-gray-300">
-          © {new Date().getFullYear()} Created By Murtuza Afsar Peelay All Right Reserved
-        </div>
+        
       </footer>
 
       {/* Floating CTA */}

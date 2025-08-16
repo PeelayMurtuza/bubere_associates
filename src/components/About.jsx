@@ -188,7 +188,7 @@ export default function About() {
               <div className="border-l border-white/8 pl-6">
                 {timelineData.map((t, i) => (
                   <div key={i} className="mb-6 relative">
-                    <div className="absolute -left-3 top-1 w-6 h-6 rounded-full bg-amber-500 border border-white/10" />
+                    <div className="absolute -left-3 top-1 w-2 h-6 rounded-full bg-amber-500 border border-white/10" />
                     <div className="font-semibold text-gray-100">{t.year}</div>
                     <div className="text-sm text-gray-300">{t.text}</div>
                   </div>
