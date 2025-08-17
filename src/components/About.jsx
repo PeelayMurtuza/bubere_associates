@@ -2,10 +2,11 @@ import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiDownload } from 'react-icons/fi';
 import DadaImage from '../images/DADA.jpg';
-import DadaGarden from '../images/DADA_GARDEN_JD.jpg';
-import GardenEntrance from '../images/GARDEN_ENTRANCE.jpg';
-import GardenSitting from '../images/GARDEN_SITTING.jpg';
 import NHRCL from '../images/NHRCL.jpg';
+import metro from '../images/metro.jpg';
+import Road from '../images/Road.jpg'
+import stormWater from '../images/stormWater.jpg'
+import customResidential from '../images/customResidential.jpg'
 
 const strengthsData = [
   {
@@ -18,25 +19,25 @@ const strengthsData = [
     title: 'Metro & Urban Infrastructure',
     description:
       'Design and execution for metro civil-support works, urban roads, sidewalks, and civic amenities. Our teams coordinate closely with utility agencies to minimise disruptions and meet stringent quality standards.',
-    image: DadaImage,
+    image: metro,
   },
   {
     title: 'Custom Construction (Residential & Commercial)',
     description:
       'Turnkey delivery for residential and commercial clients — structural works, finishing, utilities and handover, with full QA/QC documentation and client walk-throughs.',
-    image: DadaGarden,
+    image: customResidential,
   },
   {
     title: 'Stormwater & Drainage Systems',
     description:
       'End-to-end stormwater and sewage network works: survey, hydraulic design support, excavation, pipe laying and chamber construction with maintenance plans.',
-    image: GardenEntrance,
+    image: stormWater,
   },
   {
     title: 'Road Development & Pavement Rehabilitation',
     description:
       'Pavement design, widening, resurfacing and strengthening projects that extend asset life and improve ride quality using best-in-class materials and test regimes.',
-    image: GardenSitting,
+    image: Road,
   },
 ];
 
@@ -157,7 +158,7 @@ export default function About() {
               onClick={() => setSelected(item)}
             >
               <div className="flex items-start gap-4">
-                <div className="w-14 h-14 rounded-lg overflow-hidden flex-shrink-0 border border-white/8">
+                <div className="w-28 h-20 rounded-lg overflow-hidden flex-shrink-0 border border-white/8">
                   <img src={item.image} alt={item.title} className="w-full h-full object-cover" />
                 </div>
                 <div>

@@ -8,6 +8,11 @@ import DadaGarden from '../images/DADA_GARDEN_JD.jpg';
 import GardenEntrance from '../images/GARDEN_ENTRANCE.jpg';
 import GardenSitting from '../images/GARDEN_SITTING.jpg';
 import NHRCL from '../images/NHRCL.jpg';
+import Residential from '../images/Residential.jpg'
+import metro from '../images/metro.jpg';
+import Road from '../images/Road.jpg'
+import stormWater from '../images/stormWater.jpg'
+import customResidential from '../images/customResidential.jpg'
 
 const servicesData = [
   { id: 1, title: 'Government Tendering', text: 'Tender preparation, pre-bid, execution & compliance' },
@@ -20,8 +25,8 @@ const servicesData = [
 
 const projectsData = [
   { id: 1, title: 'Male Garden Development', year: '2018', img: DadaGarden, short: 'Garden beautification & civil works', long: 'Complete landscaping, paving, and small-structure construction.' },
-  { id: 2, title: 'Metro Water Supply Works', year: '2019', img: GardenEntrance, short: 'Underground water works for metro support', long: 'Large-bore pipeline installation and chamber works near metro alignments.' },
-  { id: 3, title: 'Stormwater Drainage', year: '2021', img: GardenSitting, short: 'Storm drainage & pipeline cleaning', long: 'Widening drains, new RCC channels and desilting operations.' },
+  { id: 2, title: 'Metro Water Supply Works', year: '2019', img: metro, short: 'Underground water works for metro support', long: 'Large-bore pipeline installation and chamber works near metro alignments.' },
+  { id: 3, title: 'Stormwater Drainage', year: '2021', img: stormWater, short: 'Storm drainage & pipeline cleaning', long: 'Widening drains, new RCC channels and desilting operations.' },
 ];
 
 const timelineData = [
@@ -32,10 +37,10 @@ const timelineData = [
 ];
 
 const slides = [
-  { id: 1, src: NHRCL, caption: 'Highway Rehabilitation - Phase I' },
-  { id: 2, src: DadaGarden, caption: 'Drainage & Pipeline Works' },
-  { id: 3, src: GardenSitting, caption: 'Urban Landscaping & Parks' },
-  { id: 4, src: DadaImage, caption: 'Metro Support Structural Works' }, // replaced placeholder
+  { id: 1, src: Road, caption: 'Highway Rehabilitation - Phase I' },
+  { id: 2, src: stormWater, caption: 'Drainage & Pipeline Works' },
+  { id: 3, src: Residential, caption: 'Urban Landscaping & Parks' },
+  { id: 4, src: metro, caption: 'Metro Support Structural Works' }, // replaced placeholder
 ];
 
 export default function Home() {
@@ -218,7 +223,7 @@ useEffect(() => {
           <div className="grid md:grid-cols-3 gap-6">
             {projectsData.map(p => (
               <div key={p.id} className="bg-white/6 rounded-xl overflow-hidden shadow border border-white/8">
-                <div className="h-40 bg-gray-800/30 flex items-center justify-center">
+                <div className="h-72 bg-gray-800/30 flex items-center justify-center">
                   <img src={p.img} alt={p.title} className="w-full h-full object-cover" />
                 </div>
                 <div className="p-4">
@@ -344,7 +349,7 @@ useEffect(() => {
           <div className="relative overflow-hidden rounded-2xl shadow-xl border border-white/8 bg-gray-900">
             <div className="flex transition-transform duration-700" style={{ transform: `translateX(-${currentSlide * 100}%)` }}>
               {slides.map(slide => (
-                <div key={slide.id} className="min-w-full h-80 flex items-center justify-center bg-gray-8 00 relative">
+                <div key={slide.id} className="min-w-full h-screen flex items-center justify-center bg-gray-8 00 relative">
                   <img src={slide.src} alt={slide.caption} className="absolute inset-0 w-full h-full object-cover opacity-90" />
                   <div className="relative z-10 bg-black/30 w-full h-full flex items-end">
                     <div className="p-6 text-white max-w-3xl">
@@ -471,8 +476,8 @@ useEffect(() => {
 
           <div>
             <div className="font-semibold text-amber-100">Location</div>
-            <div className="text-sm text-gray-300 mt-2">Bhiwandi, Maharashtra, India</div>
-            <div className="mt-3 rounded overflow-hidden shadow mt-2">
+            <div className="text-sm text-gray-300 mt-2">Gala No 1, Rose Apartment, 181, 80, Saudager St, Wani Ali, Bhiwandi, Maharashtra 421308</div>
+            <div className="mt-3 rounded overflow-hidden shadow ">
               <iframe
                 title="Bhiwandi location"
                 width="100%"

@@ -29,7 +29,7 @@ function App() {
     <BrowserRouter>
       {/* Floating Cursor */}
       <motion.div
-        className="fixed top-0 left-0 w-6 h-6 rounded-full bg-blue-600 mix-blend-difference pointer-events-none z-[999]"
+        className="fixed top-0 left-0 w-6 h-6 rounded-full bg-black mix-blend-difference pointer-events-none z-[999]"
         animate={{
           x: cursor.x - 12,
           y: cursor.y - 12,
