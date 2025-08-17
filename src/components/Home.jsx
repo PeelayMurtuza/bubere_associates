@@ -5,14 +5,11 @@ import { FiMessageSquare, FiMapPin, FiPhone, FiMail } from 'react-icons/fi';
 // Images
 import DadaImage from '../images/DADA.jpg';
 import DadaGarden from '../images/DADA_GARDEN_JD.jpg';
-import GardenEntrance from '../images/GARDEN_ENTRANCE.jpg';
-import GardenSitting from '../images/GARDEN_SITTING.jpg';
-import NHRCL from '../images/NHRCL.jpg';
 import Residential from '../images/Residential.jpg'
 import metro from '../images/metro.jpg';
 import Road from '../images/Road.jpg'
 import stormWater from '../images/stormWater.jpg'
-import customResidential from '../images/customResidential.jpg'
+
 
 const servicesData = [
   { id: 1, title: 'Government Tendering', text: 'Tender preparation, pre-bid, execution & compliance' },
@@ -344,12 +341,12 @@ useEffect(() => {
 
       {/* SLIDER */}
       <section id="gallery-slider" className="px-6 py-12 bg-white/6">
-        <div className="max-w-6xl mx-auto">
+        <div className="max-w-3xl mx-auto">
           <h2 className="text-3xl font-bold mb-6 text-center text-amber-100">Project Highlights</h2>
           <div className="relative overflow-hidden rounded-2xl shadow-xl border border-white/8 bg-gray-900">
             <div className="flex transition-transform duration-700" style={{ transform: `translateX(-${currentSlide * 100}%)` }}>
               {slides.map(slide => (
-                <div key={slide.id} className="min-w-full h-screen flex items-center justify-center bg-gray-8 00 relative">
+                <div key={slide.id} className="min-w-full h-96 flex items-center justify-center bg-gray-8 00 relative">
                   <img src={slide.src} alt={slide.caption} className="absolute inset-0 w-full h-full object-cover opacity-90" />
                   <div className="relative z-10 bg-black/30 w-full h-full flex items-end">
                     <div className="p-6 text-white max-w-3xl">
